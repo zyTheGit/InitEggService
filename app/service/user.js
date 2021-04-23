@@ -1,5 +1,5 @@
 const Service = require('egg').Service;
-const uuidv1 = require('uuid/v1');
+const uuid = require('uuid');
 class UserService extends Service {
     async findAll({ pageSize = 10, pageIndex = 0 }) {
         const users = await this.app.mysql.select('user', {
@@ -23,7 +23,7 @@ class UserService extends Service {
         if (user) {
             return { code: -1, msg: "操作员重复" };
         }
-        const id = uuidv1();
+        const id = uuid();
         const result = await this.app.mysql.insert('user', { account, password, id });
         return { code: 0, msg: "操作成功" };
     }
